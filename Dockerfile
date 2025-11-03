@@ -1,22 +1,23 @@
+#יבנה את התמונה מתוך מערכת קיימת מבוססת פייתון בגרסא רזה שמכילה מערכת הפעלה קטנה וכל מה שצריך כדי להריץ את האפליקציה
 FROM python:3.11-slim
 
-# Set working directory
+# מגדיר את התיקייה שבתוכה דוקר יעבוד בתוך הקונטיינר
 WORKDIR /app
 
-# Install dependencies
+# מעתיק מתוך קובץ הדרישות את הדרישות ומתקין את הדרישות שצריך לבסוף משנה את הזמן לפי זמן ירושלים שיהיה מסונכרן
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 RUN echo "ASIA/Jerusalem" > /etc/timezone
 
-# Copy application code
+# מעתיק את קובץ האפליקצייה לתוך הספרייה שבקונטיינר שנוכל להריץ אותה
 COPY app.py .
 
-# Create logs directory
+# יוצר תיקייה לשמירת לוגים והדגל נועד ליצור אותה גם אם חלק מהנתיב לא קיים
 RUN mkdir -p /app/logs
 
-# Expose port
+# מודיע לדוקר שהאפליקצייה מאזינה על פורט 5000
 EXPOSE 5000
 
-# Run the application
+#בזמן הפעלת הקונטיינר "דוקר רוץ" זה אומר לדוקר להפעיל את האפליקצייה הנ"ל באמצעות פייתון
 CMD ["python", "app.py"]
 
