@@ -29,21 +29,22 @@ jobs:
       - name: Login to ECR
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Load variables
+      - name: Load variables into shell
         run: |
-          echo "Loaded BRANCH=$BRANCH"
-          echo "Loaded SHA=$SHA"
+          source $GITHUB_ENV
+          echo "BRANCH=$BRANCH"
+          echo "SHA=$SHA"
 
       - name: Build image
         run: |
+          source $GITHUB_ENV
           IMAGE_URI=930354804502.dkr.ecr.us-east-1.amazonaws.com/showip
           docker build -t $IMAGE_URI:latest .
           docker tag $IMAGE_URI:latest $IMAGE_URI:showip-${BRANCH}-${SHA}
 
       - name: Push image to ECR
         run: |
+          source $GITHUB_ENV
           IMAGE_URI=930354804502.dkr.ecr.us-east-1.amazonaws.com/showip
           docker push $IMAGE_URI:latest
           docker push $IMAGE_URI:showip-${BRANCH}-${SHA}
-
-
