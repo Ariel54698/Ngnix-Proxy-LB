@@ -31,12 +31,12 @@ jobs:
 
       - name: Build image
         run: |
-          IMAGE_URI=123456789012.dkr.ecr.us-east-1.amazonaws.com/showips
+          IMAGE_URI=930354804502.dkr.ecr.us-east-1.amazonaws.com/showips
           docker build -t $IMAGE_URI:latest .
           docker tag $IMAGE_URI:latest $IMAGE_URI:ShowIps-${BRANCH}-${SHA}
 
       - name: Push image to ECR
         run: |
-          IMAGE_URI=123456789012.dkr.ecr.us-east-1.amazonaws.com/showips
+          IMAGE_URI=930354804502.dkr.ecr.us-east-1.amazonaws.com/showips
           docker push $IMAGE_URI:latest
           docker push $IMAGE_URI:ShowIps-${BRANCH}-${SHA}
